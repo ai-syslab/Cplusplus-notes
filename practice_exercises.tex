@@ -1,0 +1,161 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Practice Problems}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+\section{Dynamic Memory and Rule of Three}
+Write the implementation and test for the following C++ class that models a Game Inventory system.
+\begin{lstlisting}[style=cppstyle]
+	#ifndef INVENTORY_H
+	#define INVENTORY_H
+	
+	#include <string>
+	
+	class Item {
+	public:
+		Item(const std::string& name, int quantity);
+		std::string getName() const;
+		int getQuantity() const;
+	
+	private:
+		std::string name; 
+		int quantity;
+	};
+	
+	class Inventory {
+	public:
+		Inventory();
+		Inventory(const Inventory& other);
+		Inventory& operator=(const Inventory& other);
+		~Inventory();
+	
+		void addItem(const std::string& name, int quantity);
+		void removeItem(const std::string& name);
+		void printInventory() const;
+	
+	private:
+		Item** items;   // dynamic array of pointers to Items
+		int size;       // current number of items
+		int capacity;   // allocated capacity
+	
+		void resize();
+		void deepCopy(const Inventory& other);
+		void freeMemory();
+	};
+	
+	#endif // INVENTORY_H
+\end{lstlisting}
+
+
+\section{Merging Two Singly Linked Lists}
+
+You are given a basic implementation of a singly linked list storing \texttt{int} values. Your task is to write a member function \texttt{mergeWith} that merges the current list with another sorted linked list, resulting in a single sorted linked list. Both lists are sorted in non-decreasing order.
+
+\subsection*{Requirements}
+\begin{itemize}
+  \item Do not create new nodes.
+  \item Reuse existing nodes and rearrange their \texttt{next} pointers.
+  \item After merging, the current list (\texttt{*this}) should point to the merged result.
+\end{itemize}
+
+\subsection*{Given Code}
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    void insertAtEnd(int val) {
+        Node* newNode = new Node(val);
+        if (!head) {
+            head = newNode;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+
+    void print() const {
+        Node* temp = head;
+        while (temp) {
+            std::cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+        std::cout << "NULL\n";
+    }
+
+    // TODO: Implement this
+    void mergeWith(LinkedList& other);
+};
+\end{lstlisting}
+
+\subsection*{Your Task}
+
+Complete the implementation of the \texttt{mergeWith} function that merges two sorted lists.
+
+\subsection*{Expected Behavior (Test)}
+
+\begin{lstlisting}[style=cppstyle]
+int main() {
+    LinkedList list1;
+    list1.insertAtEnd(1);
+    list1.insertAtEnd(3);
+    list1.insertAtEnd(5);
+
+    LinkedList list2;
+    list2.insertAtEnd(2);
+    list2.insertAtEnd(4);
+    list2.insertAtEnd(6);
+
+    list1.mergeWith(list2);
+    list1.print(); // Expected: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> NULL
+
+    return 0;
+}
+\end{lstlisting}
+
+\end{document}

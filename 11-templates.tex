@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Templates}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+Templates allow writing \textbf{generic} and \textbf{reusable} code that works with any data type.
+
+\section{Function Templates}
+
+Function templates allow creating a single function that works with different data types.
+
+\begin{lstlisting}[style=cppstyle]
+template <typename T>
+T max(T a, T b) {
+    return (a > b) ? a : b;
+}
+\end{lstlisting}
+
+\textbf{Usage examples}:
+\begin{lstlisting}[style=cppstyle]
+max(3, 7);        // T is int
+max(3.5, 2.1);    // T is double
+\end{lstlisting}
+
+Note: \texttt{typename} and \texttt{class} are interchangeable in template declarations.
+
+\section{Class Templates}
+
+Class templates define a blueprint for a class to operate on any data type.
+
+\begin{lstlisting}[style=cppstyle]
+template <typename T>
+class Box {
+    T value;
+public:
+    void set(T val) { value = val; }
+    T get() { return value; }
+};
+\end{lstlisting}
+
+\textbf{Usage examples}:
+\begin{lstlisting}[style=cppstyle]
+Box<int> intBox;
+intBox.set(5);
+
+Box<std::string> strBox;
+strBox.set("Hello");
+\end{lstlisting}
+
+\section{Template Specialization}
+
+Template specialization allows customizing behavior for specific types.
+
+\begin{lstlisting}[style=cppstyle]
+template <>
+class Box<bool> {
+    bool value;
+public:
+    void set(bool val) { value = val; }
+    bool get() { return value; }
+};
+\end{lstlisting}
+
+\section{Non-Type Template Parameters}
+
+Templates can also take constant values as parameters.
+
+\begin{lstlisting}[style=cppstyle]
+template <typename T, int size>
+class Array {
+    T arr[size];
+};
+\end{lstlisting}
+
+\section{Summary of Benefits}
+
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Feature} & \textbf{Description} \\
+\hline
+Reusability & Write once, use with any data type \\
+\hline
+Type Safety & Type checking is enforced at compile time \\
+\hline
+Performance & No runtime overhead; templates are instantiated at compile time \\
+\hline
+\end{tabular}
+
+\end{document}

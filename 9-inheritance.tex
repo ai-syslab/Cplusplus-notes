@@ -1,0 +1,409 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Inheritance and  Polymorphism in C++}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+\section{What is Inheritance?}
+Inheritance allows a class (derived) to reuse the code from another class (base). It promotes code reuse and polymorphism.
+
+\section{Basic Syntax}
+\begin{lstlisting}[style=cppstyle]
+class Base {
+public:
+    void sayHello() {
+        std::cout << "Hello from Base\n";
+    }
+};
+
+class Derived : public Base {
+    // Inherits from Base
+};
+\end{lstlisting}
+Protected members of the base class are accessible in the derived class, while private members are not. \\
+
+\section{Access Specifiers in Inheritance}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Inheritance Type & \texttt{public} in Base & \texttt{protected} in Base & \texttt{private} in Base \\
+\hline
+\texttt{public}    & public     & protected  & inaccessible \\
+\texttt{protected} & protected  & protected  & inaccessible \\
+\texttt{private}   & private    & private    & inaccessible \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Constructors and Destructors}
+
+\begin{lstlisting}[style=cppstyle]
+class Animal {
+public:
+    Animal() {
+        std::cout << "Animal created\n";
+    }
+    ~Animal() {
+        std::cout << "Animal destroyed\n";
+    }
+};
+
+class Dog : public Animal {
+public:
+    Dog() {
+        std::cout << "Dog created\n";
+    }
+    ~Dog() {
+        std::cout << "Dog destroyed\n";
+    }
+};
+\end{lstlisting}
+
+\noindent Output when creating a \texttt{Dog} object:
+Note the order in which constructors and destructors are called.
+\begin{lstlisting}[style=cppstyle]
+Animal created
+Dog created
+Dog destroyed
+Animal destroyed
+\end{lstlisting}
+
+ 
+Demonstration of inheritance of a Student class from Person class.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+	string name;
+	int age;
+public:
+	Person(string name, int age) : name(name), age(age) {}
+	string getName() { return name; }
+	int getAge() { return age; }
+ };
+
+class Student : public Person {
+private:
+	string major;
+public:
+	Student(string name, int age, string major) : Person(name, age), major(major) {};
+	string getMajor() { return major; }
+ };
+
+ int main() {
+	Student student("John Doe", 20, "Computer Science");
+	cout << "Name: " << student.getName() << endl; // Inhertited from Person
+	cout << "Age: " << student.getAge() << endl; // Inherited from Person
+	cout << "Major: " << student.getMajor() << endl;
+ }
+
+\end{lstlisting}
+
+\section{Virtual Functions and Dynamic Dispatch}
+A virtual function is a member function in a base class that you expect to be overridden in derived classes. It allows dynamic dispatch, meaning the function that gets called is determined at runtime, based on the actual type of the object, not the type of the pointer/reference.
+
+\subsection{Without Virtual}
+
+\begin{lstlisting}[style=cppstyle]
+class Base {
+public:
+    void speak() {
+        std::cout << "Base speaking\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void speak() {
+        std::cout << "Derived speaking\n";
+    }
+};
+
+Base* b = new Derived();
+b->speak();  // Outputs: Base speaking
+\end{lstlisting}
+
+\subsection{With Virtual}
+
+\begin{lstlisting}[style=cppstyle]
+class Base {
+public:
+    virtual void speak() {
+        std::cout << "Base speaking\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void speak() override {
+        std::cout << "Derived speaking\n";
+    }
+};
+
+Base* b = new Derived();
+b->speak();  // Outputs: Derived speaking
+\end{lstlisting}
+
+\subsection*{Why use virtual destructors?}
+\begin{lstlisting}[style=cppstyle]
+class Base {
+public:
+    virtual ~Base() {
+        std::cout << "Base destroyed\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    ~Derived() {
+        std::cout << "Derived destroyed\n";
+    }
+};
+
+Base* b = new Derived();
+delete b; // Calls Derived and Base destructors
+\end{lstlisting}
+
+\section{Dynamic Memory + Rule of Three}
+If a class uses dynamic memory, it must:
+\begin{itemize}
+    \item Define a destructor
+    \item Define a copy constructor
+    \item Define a copy assignment operator
+\end{itemize}
+
+\begin{lstlisting}[style=cppstyle]
+class Base {
+protected:
+    char* name;
+public:
+    Base(const char* n) {
+        name = new char[strlen(n)+1];
+        strcpy(name, n);
+    }
+
+    virtual ~Base() {
+        delete[] name;
+    }
+
+    // Copy constructor and assignment omitted for brevity
+};
+\end{lstlisting}
+
+
+\section{Polymorphism in C++}
+
+Polymorphism means ``many forms''. In C++, it refers to the ability of different classes to be treated as instances of the same base class, particularly when using pointers or references. There are two main types:
+
+\begin{itemize}
+    \item \textbf{Compile-time polymorphism} (e.g., function overloading, operator overloading)
+    \item \textbf{Run-time polymorphism} (using \texttt{virtual} functions)
+\end{itemize}
+
+\subsection{Compile-Time Polymorphism}
+
+Achieved through \textbf{function overloading} or \textbf{operator overloading}.
+
+\begin{lstlisting}[style=cppstyle]
+class Printer {
+public:
+    void print(int i) {
+        std::cout << "Integer: " << i << "\n";
+    }
+    void print(const std::string& s) {
+        std::cout << "String: " << s << "\n";
+    }
+};
+\end{lstlisting}
+
+\subsection{Run-Time Polymorphism}
+
+Achieved using \textbf{virtual functions}. The function that gets invoked depends on the actual type of the object pointed to.
+
+\begin{lstlisting}
+class Shape {
+public:
+    virtual double getArea() const = 0;  // Pure virtual function
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double getArea() const override {
+        return 3.14159 * radius * radius;
+    }
+};
+
+class Rectangle : public Shape {
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double getArea() const override {
+        return width * height;
+    }
+};
+\end{lstlisting}
+
+\subsection{Example: Using Base Pointers}
+
+\begin{lstlisting}[style=cppstyle]
+Shape* shapes[2];
+shapes[0] = new Circle(2.0);
+shapes[1] = new Rectangle(3.0, 4.0);
+
+for (int i = 0; i < 2; ++i) {
+    std::cout << "Area: " << shapes[i]->getArea() << "\n";
+    delete shapes[i];
+}
+\end{lstlisting}
+
+\noindent Output:
+\begin{verbatim}
+Area: 12.56636
+Area: 12
+\end{verbatim}
+
+\subsection{Notes}
+
+\begin{itemize}
+    \item To enable polymorphism, use \texttt{virtual} in base class.
+    \item A pure virtual function (declared with \texttt{= 0}) makes a class abstract.
+    \item Always declare destructors \texttt{virtual} in base classes when using polymorphism.
+\end{itemize}
+
+
+\section{Abstract Classes in C++}
+
+An \textbf{abstract class} in C++ is a class that cannot be instantiated on its own. It serves as a blueprint for other classes and typically contains at least one \textbf{pure virtual function}.
+
+\subsection{Pure Virtual Functions}
+
+A pure virtual function is declared by assigning \texttt{= 0} in its declaration:
+
+\begin{lstlisting}[style=cppstyle]
+class Shape {
+public:
+    virtual double getArea() const = 0; // pure virtual function
+};
+\end{lstlisting}
+
+Any class with at least one pure virtual function is an \textbf{abstract class}.
+
+\subsection*{8.2 Purpose of Abstract Classes}
+
+\begin{itemize}
+    \item Define a common interface for derived classes.
+    \item Enforce implementation of certain methods in derived classes.
+    \item Enable polymorphism with base pointers or references.
+\end{itemize}
+
+\subsection*{8.3 Example: Abstract Base Class}
+
+\begin{lstlisting}[style=cppstyle]
+class Shape {
+public:
+    virtual double getArea() const = 0; // pure virtual
+    virtual void draw() const = 0;
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double getArea() const override {
+        return 3.14159 * radius * radius;
+    }
+    void draw() const override {
+        std::cout << "Drawing circle\n";
+    }
+};
+
+class Rectangle : public Shape {
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double getArea() const override {
+        return width * height;
+    }
+    void draw() const override {
+        std::cout << "Drawing rectangle\n";
+    }
+};
+\end{lstlisting}
+
+\subsection*{8.4 Usage with Polymorphism}
+
+\begin{lstlisting}[style=cppstyle]
+Shape* s1 = new Circle(2.0);
+Shape* s2 = new Rectangle(3.0, 4.0);
+
+s1->draw();   // Drawing circle
+s2->draw();   // Drawing rectangle
+
+delete s1;
+delete s2;
+\end{lstlisting}
+
+\subsection*{8.5 Key Points}
+
+\begin{itemize}
+    \item Abstract classes define interfaces, not implementations.
+    \item Cannot create instances of abstract classes.
+    \item Derived classes must implement all pure virtual functions, or they remain abstract.
+    \item Use abstract base classes to enable consistent APIs and polymorphism.
+\end{itemize}
+
+
+\section{Multiple Inheritance (Overview)}
+
+\begin{lstlisting}[style=cppstyle]
+class A { };
+class B { };
+class C : public A, public B { };
+\end{lstlisting}
+
+\noindent Be careful with ambiguity and name conflicts.
+
+
+
+\end{document}

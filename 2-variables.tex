@@ -1,0 +1,289 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\geometry{margin=1in}
+
+\title{Variables and Operators}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+\section{How a Computer is Organized}
+
+A computer is made up of several key components that work together to execute programs like your C++ code.
+
+\subsection*{Main Components}
+
+\renewcommand{\arraystretch}{1.5} % Increase row height
+\setlength{\tabcolsep}{12pt}      % Increase column padding
+
+\begin{center}
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\rowcolor{lightgray} \textbf{Component} & \textbf{Description} \\
+\hline
+\textbf{CPU} & The Central Processing Unit is the brain of the computer. It performs calculations and executes instructions. \\
+\hline
+\textbf{RAM} & Random Access Memory is short-term memory. It temporarily holds data and instructions that are in use. \\
+\hline
+\textbf{Storage} & Long-term memory (e.g., SSD or HDD). It permanently stores files, programs, and the operating system. \\
+\hline
+\textbf{Input Devices} & Devices like the keyboard, mouse, or microphone that allow users to send data into the computer. \\
+\hline
+\textbf{Output Devices} & Devices such as monitors, speakers, or printers that present data from the computer to the user. \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Basic Program Flow}
+\begin{itemize}
+    \item You write C++ code as high-level instructions.
+    \item The compiler converts this code into machine code.
+    \item The CPU executes the machine code, using RAM to store data temporarily.
+    \item Input/output devices allow the user to interact with the program.
+\end{itemize}
+
+\section{What Are Variables in C++?}
+
+A \textbf{variable} is a named location in memory that stores data.
+
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.2\textwidth]{figures/var.png}  % Adjust width as needed
+    \caption{Illustration of variables in memory. Here x is a variable with value 28.}
+    \label{fig:var}
+\end{figure}
+
+
+\subsection*{Common Data Types}
+
+Each variable must have a ``type" that specifies the type of data it holds. For example, int holds integer data and double holds real numbers.
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Type} & \textbf{Meaning} & \textbf{Example} \\
+\hline
+\texttt{int} & Integer & \texttt{int age = 25;} \\
+\texttt{float} & Decimal number & \texttt{float temp = 98.6;} \\
+\texttt{double} & More precise decimal & \texttt{double pi = 3.14159;} \\
+\texttt{char} & Single character & \texttt{char grade = 'A';} \\
+\texttt{bool} & True or false & \texttt{bool passed = true;} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Rules for Naming Variables}
+\begin{itemize}
+    \item Must start with a letter or underscore (\texttt{\_})
+    \item Cannot use C++ keywords (e.g., \texttt{int}, \texttt{while})
+    \item Case-sensitive (\texttt{score} and \texttt{Score} are different)
+\end{itemize}
+
+\section{What Are Operators?}
+
+Operators are symbols that tell the computer to perform specific operations on \textbf{variables} and \textbf{values}.
+
+\section*{Operators in C++}
+
+Below is a summary of common types of operators in C++:
+
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+
+\subsection*{Arithmetic Operators}
+
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{Operator} & \textbf{Use} & \textbf{Example} & \textbf{Result} \\
+\hline
+\texttt{+} & Addition & \texttt{5 + 3} & \texttt{8} \\
+\hline
+\texttt{-} & Subtraction & \texttt{5 - 3} & \texttt{2} \\
+\hline
+\texttt{*} & Multiplication & \texttt{5 * 3} & \texttt{15} \\
+\hline
+\texttt{/} & Division & \texttt{5 / 2} & \texttt{2} (integer division) \\
+\hline
+\texttt{\%} & Modulus (remainder) & \texttt{5 \% 2} & \texttt{1} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Assignment Operators}
+
+\begin{center}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{Operator} & \textbf{Use} & \textbf{Example} \\
+\hline
+\texttt{=} & Assign value & \texttt{x = 10;} \\
+\hline
+\texttt{+=} & Add and assign & \texttt{x += 5;} (\texttt{x = x + 5}) \\
+\hline
+\texttt{-=} & Subtract and assign & \texttt{x -= 2;} \\
+\hline
+\texttt{*=} & Multiply and assign & \texttt{x *= 3;} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Comparison Operators}
+
+\begin{center}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{Operator} & \textbf{Meaning} & \textbf{Example} \\
+\hline
+\texttt{==} & Equal to & \texttt{x == 5} \\
+\hline
+\texttt{!=} & Not equal to & \texttt{x != 5} \\
+\hline
+\texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=} & Less than, etc. & \texttt{x < 10} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Logical Operators}
+
+\begin{center}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{Operator} & \textbf{Meaning} & \textbf{Example} \\
+\hline
+\texttt{\&\&} & AND (both conditions true) & \texttt{x > 0 \&\& y > 0} \\
+\hline
+\texttt{||} & OR (at least one true) & \texttt{x > 0 || y > 0} \\
+\hline
+\texttt{!} & NOT (negation) & \texttt{!is\_valid} \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{How Operators and Variables Work Together}
+
+Variables store values.  
+Operators act on these values to compute new results, which can then be stored back in variables.
+
+\begin{verbatim}
+int a = 5;
+int b = 2;
+int result = a + b;  // '+' is the operator acting on variables a and b
+\end{verbatim}
+
+In this case:
+\begin{itemize}
+    \item \texttt{a} and \texttt{b} are \textbf{variables}
+    \item \texttt{+} is an \textbf{arithmetic operator}
+    \item The result (7) is stored in another variable \texttt{result}
+\end{itemize}
+
+\section{Analogy Table}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Concept} & \textbf{Role in C++} & \textbf{Analogy} \\
+\hline
+Variable & A box with a name that stores data & A labeled jar \\
+Value & The contents inside the variable & Candy inside the jar \\
+Operator & A tool used to work with values & A spoon to add/subtract candy \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Operator Actions on Variables}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Expression} & \textbf{Action Performed} \\
+\hline
+\texttt{x = 10} & Store 10 in variable \texttt{x} \\
+\texttt{y = x + 5} & Add \texttt{x} and 5, store in \texttt{y} \\
+\texttt{x += 3} & Increase \texttt{x} by 3 \\
+\texttt{z = x * y} & Multiply \texttt{x} and \texttt{y}, store in \texttt{z} \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent\textbf{In short:} Operators manipulate the values stored in variables to produce new results.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Variable declarations
+    int a = 10;
+    int b = 3;
+
+    // Arithmetic operators
+    int sum = a + b;
+    int difference = a - b;
+    int product = a * b;
+    int quotient = a / b;
+    int remainder = a % b;
+
+    // Output results
+    cout << "a = " << a << ", b = " << b << endl;
+    cout << "Sum (a + b) = " << sum << endl;
+    cout << "Difference (a - b) = " << difference << endl;
+    cout << "Product (a * b) = " << product << endl;
+    cout << "Quotient (a / b) = " << quotient << endl;
+    cout << "Remainder (a % b) = " << remainder << endl;
+
+    // Relational operator
+    cout << "Is a greater than b? " << (a > b) << endl;
+
+    // Logical operator
+    bool result = (a > 5) && (b < 5);
+    cout << "Is a > 5 AND b < 5? " << result << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Comple and run using - 
+\begin{verbatim}
+g++ demo.cpp -o demo
+./demo  
+\end{verbatim}
+
+
+\end{document}

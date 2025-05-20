@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\title{Introduction to Smart Pointers in C++}
+\date{}
+\begin{document}
+\maketitle
+
+\section*{What are Smart Pointers?}
+Smart pointers are class templates in \texttt{<memory>} that automatically manage the lifetime of dynamically allocated objects. Unlike raw pointers, they prevent memory leaks by automatically deallocating memory when it's no longer needed.
+
+\section*{Types of Smart Pointers}
+
+\subsection*{1. \texttt{std::unique\_ptr}}
+A \texttt{unique\_ptr} owns an object exclusively. It cannot be copied, only moved.
+
+\textbf{Example:}
+\begin{lstlisting}[language=C++]
+#include <memory>
+#include <iostream>
+
+struct Foo {
+    Foo() { std::cout << "Foo created\n"; }
+    ~Foo() { std::cout << "Foo destroyed\n"; }
+};
+
+int main() {
+    std::unique_ptr<Foo> p = std::make_unique<Foo>();
+} // Foo is destroyed automatically here
+\end{lstlisting}
+
+\subsection*{2. \texttt{std::shared\_ptr}}
+A \texttt{shared\_ptr} allows multiple pointers to share ownership of the same object. The object is deleted when the last \texttt{shared\_ptr} is destroyed.
+
+\textbf{Example:}
+\begin{lstlisting}[language=C++]
+#include <memory>
+#include <iostream>
+
+int main() {
+    auto p1 = std::make_shared<int>(42);
+    auto p2 = p1; // reference count increases
+    std::cout << *p2 << std::endl; // prints 42
+} // object deleted when last shared_ptr goes out of scope
+\end{lstlisting}
+
+\subsection*{3. \texttt{std::weak\_ptr}}
+A \texttt{weak\_ptr} is a non-owning reference to a \texttt{shared\_ptr} managed object. It is used to avoid cyclic dependencies.
+
+\textbf{Example:}
+\begin{lstlisting}[language=C++]
+#include <memory>
+#include <iostream>
+
+int main() {
+    std::shared_ptr<int> sp = std::make_shared<int>(100);
+    std::weak_ptr<int> wp = sp;
+
+    if (auto locked = wp.lock()) {
+        std::cout << *locked << std::endl;
+    } else {
+        std::cout << "Object no longer exists.\n";
+    }
+}
+\end{lstlisting}
+
+\section*{Comparison Table}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Pointer Type & Ownership & Reference Counted & Auto Deletes \\
+\hline
+\texttt{unique\_ptr} & Exclusive & No & Yes \\
+\texttt{shared\_ptr} & Shared & Yes & Yes (last one) \\
+\texttt{weak\_ptr} & None & No & No \\
+\hline
+\end{tabular}
+
+\section*{Summary}
+\begin{itemize}
+  \item Use \texttt{unique\_ptr} when only one owner exists.
+  \item Use \texttt{shared\_ptr} when ownership is shared.
+  \item Use \texttt{weak\_ptr} to observe an object managed by \texttt{shared\_ptr} without extending its lifetime.
+\end{itemize}
+
+\end{document}

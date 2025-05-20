@@ -1,0 +1,135 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\geometry{margin=1in}
+
+\title{Arrays and Vectors}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+Arrays and vectors let you store multiple values in a single variable. They are useful when dealing with groups of data—like a list of scores or names.
+
+\section{Arrays}
+
+An array is a fixed-size collection of elements of the same type. Each element is accessed by an index (starting from 0).
+
+\begin{lstlisting}[style=cppstyle]
+// Declare and initialize an array of size 5
+int scores[5] = {90, 85, 78, 92, 88};
+
+// Access and modify elements
+cout << "First score: " << scores[0] << endl;
+scores[1] = 95;
+\end{lstlisting}
+
+\textbf{Key Points:}
+\begin{itemize}
+    \item Array size must be known at compile time.
+    \item Indices start from 0 and go up to size - 1.
+    \item Accessing an invalid index leads to undefined behavior.
+\end{itemize}
+
+\textbf{Memory Layout:} \\
+An array stores elements in \textbf{contiguous memory locations}. This means if \texttt{scores[0]} is at address \texttt{1000} and each \texttt{int} takes 4 bytes, then:
+
+\begin{itemize}
+    \item \texttt{scores[1]} is at address \texttt{1004}
+    \item \texttt{scores[2]} is at address \texttt{1008}
+    \item and so on
+\end{itemize}
+
+This layout allows fast access to any element using its index and is important for performance in loops.
+
+
+\section{Looping Over Arrays}
+
+Arrays work well with loops to process each element.
+
+\begin{lstlisting}[style=cppstyle]
+for (int i = 0; i < 5; i++) {
+    cout << "Score " << i << ": " << scores[i] << endl;
+}
+\end{lstlisting}
+
+\section{Multidimensional Arrays}
+
+You can have arrays of arrays, useful for tables or grids.
+
+\begin{lstlisting}[style=cppstyle]
+int matrix[2][3] = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+cout << matrix[1][2];  // Outputs 6
+\end{lstlisting}
+
+\section{Vectors (C++ Standard Library)}
+
+A \texttt{vector} is a dynamic array. Unlike regular arrays, vectors can grow or shrink in size during runtime.
+
+To use vectors, include the header:
+\begin{lstlisting}[style=cppstyle]
+#include <vector>
+using namespace std;
+\end{lstlisting}
+
+\textbf{Basic Usage:}
+\begin{lstlisting}[style=cppstyle]
+vector<int> numbers;         // empty vector
+numbers.push_back(10);       // add 10
+numbers.push_back(20);
+cout << numbers[0];          // outputs 10
+\end{lstlisting}
+
+\texttt{<int>} means this vector will store elements of type \texttt{int}. You can replace \texttt{int} with other types like \texttt{double}, \texttt{char}, or \texttt{string}.
+
+\textbf{Looping with Range-Based for (C++11):}
+\begin{lstlisting}[style=cppstyle]
+for (int n : numbers) {
+    cout << n << " ";
+}
+\end{lstlisting}
+
+\textbf{Why Vectors?}
+\begin{itemize}
+    \item Size can change at runtime.
+    \item Provides useful functions like \texttt{push\_back()}, \texttt{size()}, and \texttt{clear()}.
+    \item Safer and more flexible than raw arrays.
+\end{itemize}
+
+\end{document}

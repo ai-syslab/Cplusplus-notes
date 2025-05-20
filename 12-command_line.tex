@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Command Line Parameters}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+C++ programs can accept input from the command line using \texttt{main()} parameters: \texttt{argc} and \texttt{argv}.
+
+\section{Function Signature}
+
+\begin{lstlisting}[style=cppstyle]
+int main(int argc, char* argv[]) {
+    // code
+}
+\end{lstlisting}
+
+\textbf{Parameters}:
+\begin{itemize}
+    \item \texttt{argc} – Argument count. Number of command line arguments passed (including program name).
+    \item \texttt{argv[]} – Argument vector. Array of C-strings (char pointers) representing arguments.
+\end{itemize}
+
+\section{Example Usage}
+
+Command:
+\begin{lstlisting}[style=cppstyle]
+./program input.txt 42
+\end{lstlisting}
+
+\textbf{Values at runtime}:
+\begin{itemize}
+    \item \texttt{argc} = 3
+    \item \texttt{argv[0]} = "./program"
+    \item \texttt{argv[1]} = "input.txt"
+    \item \texttt{argv[2]} = "42"
+\end{itemize}
+
+\section{Example Program}
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+int main(int argc, char* argv[]) {
+    cout << "Argument count: " << argc << endl;
+    for (int i = 0; i < argc; ++i) {
+        cout << "argv[" << i << "]: " << argv[i] << endl;
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\section{Notes}
+
+\begin{itemize}
+    \item All \texttt{argv[]} entries are of type \texttt{char*}; convert to integers with \texttt{std::stoi(argv[i])}.
+    \item \texttt{argv[argc]} is guaranteed to be a null pointer.
+    \item Useful for passing filenames, flags, or configuration options without user interaction.
+\end{itemize}
+
+\end{document}

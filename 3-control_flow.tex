@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\geometry{margin=1in}
+
+\title{Control Flow}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+Control flow determines the order in which instructions are executed. It allows programs to make decisions, repeat actions, and manage complex logic.
+
+\section{\texttt{if}, \texttt{else if}, and \texttt{else}}
+
+Use when you want the program to take different actions depending on a condition.
+
+\begin{lstlisting}[style=cppstyle]
+int score = 85;
+if (score >= 90) {
+    cout << "Grade: A";
+} else if (score >= 80) {
+    cout << "Grade: B";
+} else {
+    cout << "Grade: C or below";
+}
+\end{lstlisting}
+
+\section{\texttt{switch-case} Statement}
+
+Use when checking a variable against fixed values (e.g., menu options).
+
+\begin{lstlisting}[style=cppstyle]
+int option = 2;
+switch (option) {
+    case 1:
+        cout << "Start game";
+        break;
+    case 2:
+        cout << "Load game";
+        break;
+    default:
+        cout << "Invalid option";
+}
+\end{lstlisting}
+
+Each case runs until a break is reached. Without break, the program continues (“falls through”) to the next case, which may cause unintended behavior.
+
+\section{\texttt{while} Loop}
+
+Use when you want to repeat something as long as a condition is true.
+
+\begin{lstlisting}[style=cppstyle]
+int count = 0;
+while (count < 3) {
+    cout << "Hello\n";
+    count++;
+}
+\end{lstlisting}
+
+\section{\texttt{do-while} Loop}
+
+Use when you want to run the loop at least once.
+
+\begin{lstlisting}[style=cppstyle]
+int number;
+do {
+    cout << "Enter a positive number: ";
+    cin >> number;
+} while (number <= 0);
+\end{lstlisting}
+
+\texttt{cin} is used to take input from the user. It reads a value typed into the console and stores it in a variable.
+
+\section{\texttt{for} Loop}
+
+Use when the number of repetitions is known in advance.
+
+\begin{lstlisting}[style=cppstyle]
+for (int i = 1; i <= 5; i++) {
+    cout << "Step " << i << "\n";
+}
+\end{lstlisting}
+
+\subsection{Nested Loops (Without Arrays)}
+
+Use when repeating something inside another repetition (e.g., patterns).
+
+\begin{lstlisting}[style=cppstyle]
+// Print a 3x3 square of stars
+for (int row = 0; row < 3; row++) {
+    for (int col = 0; col < 3; col++) {
+        cout << "* ";
+    }
+    cout << "\n";
+}
+\end{lstlisting}
+
+\subsection{Control Statements}
+
+\texttt{break}, \texttt{continue}, and \texttt{return} help manage loop execution.
+
+\begin{lstlisting}[style=cppstyle]
+for (int i = 1; i <= 5; i++) {
+    if (i == 3) continue;  // Skip 3
+    if (i == 5) break;     // Stop at 4
+    cout << i << " ";
+}
+\end{lstlisting}
+
+\texttt{continue} skips the rest of the loop body and moves to the next iteration.
+
+\texttt{break} exits the loop entirely, even if the condition is still true.
+
+\subsection{Ternary Operator}
+
+Short form of an \texttt{if-else} expression. A ternary operator is a compact way to choose between two values.
+
+Syntax: \texttt{condition ? value-if-true : value-if-false}
+
+\begin{lstlisting}[style=cppstyle]
+int x = 10, y = 20;
+int max = (x > y) ? x : y;
+cout << "Max is " << max;
+\end{lstlisting}
+
+\subsection{Range-Based \texttt{for} Loop (C++11)}
+
+Used to loop over collections like strings or vectors.
+
+\begin{lstlisting}[style=cppstyle]
+string name = "C++";
+for (char ch : name) {
+    cout << ch << "\n";
+}
+\end{lstlisting}
+
+\end{document}

@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{courier}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  breaklines=true,
+  frame=single,
+  language=C++
+}
+
+\begin{document}
+
+\section*{Recursion in C++}
+
+\subsection*{1. Definition}
+Recursion is a programming technique where a function calls itself to solve a smaller instance of the same problem.\\
+\textbf{Key components:}
+\begin{itemize}
+  \item \textbf{Base case}: the condition under which the recursion stops.
+  \item \textbf{Recursive case}: the part where the function calls itself with a simpler or smaller argument.
+\end{itemize}
+
+\subsection*{2. How It Works}
+Each recursive call is pushed onto the call stack. When a base case is reached, the stack unwinds, returning results back up the chain.
+
+\subsection*{3. Example 1: Factorial}
+Compute \(n!\) defined by
+\[
+n! = 
+\begin{cases}
+1, & n \le 1,\\
+n \times (n-1)!, & n > 1.
+\end{cases}
+\]
+\begin{lstlisting}
+// factorial.cpp
+#include <iostream>
+
+unsigned long factorial(unsigned int n) {
+    if (n <= 1)                // base case
+        return 1;
+    return n * factorial(n-1); // recursive case
+}
+
+int main() {
+    std::cout << "5! = " << factorial(5) << "\n";
+    return 0;
+}
+\end{lstlisting}
+
+\subsection*{4. Example 2: Fibonacci (Naïve)}
+Compute the \(n\)th Fibonacci number:
+\[
+F(n) = 
+\begin{cases}
+0, & n = 0,\\
+1, & n = 1,\\
+F(n-1) + F(n-2), & n > 1.
+\end{cases}
+\]
+\begin{lstlisting}
+// fibonacci.cpp
+#include <iostream>
+
+unsigned int fib(unsigned int n) {
+    if (n < 2)                // base case
+        return n;
+    return fib(n-1) + fib(n-2); // recursive case
+}
+
+int main() {
+    std::cout << "F(6) = " << fib(6) << "\n";
+    return 0;
+}
+\end{lstlisting}
+
+\subsection*{5. Notes and Pitfalls}
+\begin{itemize}
+  \item \textbf{Infinite recursion}: missing or incorrect base case leads to stack overflow.
+  \item \textbf{Performance}: naïve recursion (e.g., Fibonacci) may have exponential time complexity.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,237 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Getting Started With C++}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Who and When Was C++ Developed}
+C++ was developed by \textbf{Bjarne Stroustrup} at \textit{Bell Labs} starting in 1979. The latest version of C++ is C++23. 
+
+
+\section*{What Is C++ Used For Compared to Python}
+
+\begin{tabular}{|l|p{6cm}|p{6cm}|}
+\hline
+\textbf{Aspect} & \textbf{C++} & \textbf{Python} \\
+\hline
+Performance & High-performance, compiled & Slower, interpreted \\
+Memory Control & Manual, deterministic & Automatic garbage collection \\
+Use Cases & Systems programming, games, embedded systems, real-time applications & Data science, scripting, automation, web apps \\
+Syntax & Verbose, statically typed & Concise, dynamically typed \\
+\hline
+\end{tabular}
+
+
+\section{Installing the development tools}
+
+On Windows, we will be programing with C++ on the Linux operating system. We will use Visual Studio Code as the editor.
+
+
+\subsection{Installing Visual Studio Code}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Windows}: Download the installer from \url{https://code.visualstudio.com}. Run the setup and ensure options like ``Add to PATH'' and ``Open with Code'' are selected.
+    \item \textbf{macOS}: Download the \texttt{.zip} file from the same site. Drag the app to \texttt{/Applications}.
+\end{itemize}
+
+\subsection{Running Linux on Windows using Windows Subsystem for Linux (WSL)}
+
+\textbf{Step 1: Enable the ``Windows Subsystem for Linux'' Feature}
+
+\begin{enumerate}[leftmargin=2em]
+    \item Click on the Start Menu (the Windows logo in the bottom-left corner).
+    \item Type in \texttt{Turn Windows features on or off} and click on it when it appears.
+    \item Scroll down the list until you find \texttt{Windows Subsystem for Linux}.
+    \item Check the box next to it.
+    \item Click OK.
+    \item Windows might ask you to restart your computer. Go ahead and do that.
+\end{enumerate}
+
+\textbf{Step 2: Install the Ubuntu 24.04 App from the Microsoft Store}
+
+
+\begin{enumerate}[leftmargin=2em, resume]
+    \item Click on the Microsoft Store icon on your taskbar (it looks like a shopping bag with the Windows logo). If you don't see it, search for \texttt{Microsoft Store} in the Start Menu.
+    \item In the search bar at the top, type \texttt{Ubuntu}.
+    \item You should see an app named \texttt{Ubuntu} (sometimes it might say \texttt{Ubuntu on Windows}). Click on it.
+    \item Look for a button that says \texttt{Get} or \texttt{Install}. Click on that.
+    \item Windows will download and install Ubuntu. This might take a few minutes depending on your internet speed.
+\end{enumerate}
+
+\textbf{Step 3: Launch Ubuntu for the First Time}
+
+Once the installation is done, you can start using Ubuntu!
+
+\begin{enumerate}[leftmargin=2em, resume]
+    \item Click on the Start Menu again.
+    \item Type \texttt{Ubuntu} and click on the \texttt{Ubuntu} app that appears.
+    \item A black window (called a \textit{terminal} or \textit{console}) will open. This is where you'll interact with Ubuntu using text commands.
+    \item The first time you run it, Ubuntu will take a little while to set things up. It will ask you to create a username and a password for your Ubuntu environment.
+    
+    \item \textbf{Important:} When typing the password, no characters will appear on the screen. That’s normal. Just type and press \texttt{Enter}.
+\end{enumerate}
+
+That's it! You now have Ubuntu 24.04 running on your Windows machine through WSL. You can start exploring the Linux command line and learning programming tools.
+
+\vspace{1em}
+\textbf{A few extra things to keep in mind:}
+\begin{itemize}[leftmargin=1.5em]
+    \item You can open the Ubuntu terminal anytime by searching for \texttt{Ubuntu} in the Start Menu.
+    \item Files created in Ubuntu are generally separate from your Windows files.
+\end{itemize}
+
+\vspace{0.5em}
+For full instructions, see the official guide:  
+\url{https://learn.microsoft.com/en-us/windows/wsl/install}
+
+\subsection{macOS}
+Install Xcode command line tools from the terminal:
+\begin{verbatim}
+xcode-select --install
+\end{verbatim}
+
+\section{Accessing WSL Linux Files from Windows VS Code}
+
+You can seamlessly access your WSL Linux files from your Windows-installed VS Code using the \textbf{Remote - WSL} extension. This extension essentially allows VS Code running on Windows to interact with your Linux environment as if it were local. Here's how to set it up and use it:
+
+\subsection{Install the Remote - WSL Extension}
+
+\begin{itemize}
+    \item Open Visual Studio Code on your Windows machine.
+    \item Go to the \textbf{Extensions} view (Ctrl+Shift+X or click the Extensions icon in the Activity Bar on the left).
+    \item Search for ``\texttt{Remote - WSL}'' by Microsoft.
+    \item Click \textbf{Install}.
+    \item If you plan to use other remote development features in VS Code (like connecting to remote SSH servers or Docker containers), you can instead install the ``\texttt{Remote Development}'' extension pack, which includes the WSL extension.
+\end{itemize}
+
+\subsection{Open Your WSL Files in VS Code}
+
+There are a few ways to do this once the extension is installed:
+
+\subsubsection{From the WSL Terminal}
+\begin{enumerate}
+    \item Open your WSL terminal (e.g., by searching for ``Ubuntu'' in the Start Menu).
+    \item Navigate to the directory you want to open in VS Code using Linux commands (e.g., \texttt{cd /home/your\_username/your\_project}).
+    \item Type \texttt{code .} (note the dot at the end, which signifies the current directory) and press Enter.
+    \item VS Code will open a new window, and in the bottom-left corner, you'll see a green indicator that says ``WSL: [Your Distro Name]'' (e.g., ``WSL: Ubuntu''). This confirms you are connected to your WSL environment.
+\end{enumerate}
+
+\subsubsection{From VS Code Directly}
+\begin{enumerate}
+    \item Open Visual Studio Code on Windows.
+    \item Press \textbf{F1} to open the Command Palette (or Ctrl+Shift+P).
+    \item Type ``\texttt{WSL: Connect to WSL}'' and press Enter. This will connect to your default WSL distribution.
+    \item Alternatively, you can type ``\texttt{WSL: Connect to WSL using Distro...}'' if you have multiple WSL distributions and want to choose a specific one.
+    \item Once connected, go to \textbf{File \textgreater{} Open Folder...}
+    \item A file explorer window will open, but it will be showing the file system \textit{within your WSL environment}. You can navigate to your Linux files here (usually under \texttt{/home/your\_username/}). Select the folder you want to open and click ``OK''.
+\end{enumerate}
+
+\subsubsection{Reopening a Recent WSL Folder}
+\begin{itemize}
+    \item If you've previously opened a WSL folder in VS Code, you can quickly reopen it via \textbf{File > Open Recent} and look for entries with the ``[WSL]'' suffix.
+\end{itemize}
+
+\subsection{Working with WSL Files in VS Code}
+
+Once connected to your WSL environment in VS Code:
+
+\begin{itemize}
+    \item \textbf{File Explorer:} The Explorer view (Ctrl+Shift+E) will show the files and folders within your WSL Linux file system.
+    \item \textbf{Terminal:} When you open a new terminal in VS Code (Terminal \textgreater{} New Terminal, or Ctrl+\`), it will be a Linux terminal running within your WSL environment, allowing you to execute Linux commands directly.
+    \item \textbf{Editing and Saving:} You can edit your Linux files as you would any other files in VS Code. When you save, the changes are directly saved within your WSL file system.
+    \item \textbf{Extensions:} VS Code intelligently manages extensions when working with WSL. Some extensions might run on the Windows side, while others might run within the WSL environment to provide the best experience for your Linux files and tools. You might see a prompt to install certain extensions in WSL if they are recommended for your project type.
+    \item \textbf{Debugging:} You can configure debugging for applications running within your WSL environment directly from VS Code (depending on the language and debugging tools you have installed in WSL).
+\end{itemize}
+
+
+By using the Remote - WSL extension, you can leverage the best of both Windows and Linux for your development workflow!
+
+\section{Writing and Running a Hello World Program}
+
+We'll create a directory called C++ from the terminal (also command line). Type in the following commands. \\
+\begin{verbatim}
+	mkdir C++ 
+	ls
+	cd C++
+\end{verbatim}
+
+
+\subsection{Source Code (\texttt{hello.cpp})}
+Now open the C++ folder from VS Code. Create a new file, \textit{hello.cpp}, and cut and past the following code. \\
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+int main() {
+    std::cout << "Hello, world!" << std::endl;
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{Compiling and Running}
+From the terminal,
+
+\begin{verbatim}
+g++ hello.cpp -o hello
+./hello
+\end{verbatim}
+
+
+\section{Understanding \texttt{cout} and \texttt{\#include <iostream>} in C++}
+
+In C++, \texttt{cout} (pronounced \textit{see-out}) is used to print output to the screen. It stands for ``character output'' and is part of the standard input/output stream library.
+
+To use \texttt{cout}, you must include the \texttt{<iostream>} header at the top of your program:
+
+\begin{verbatim}
+#include <iostream>
+\end{verbatim}
+
+This tells the compiler to include the Input/Output Stream library, which provides \texttt{cout} and other tools such as \texttt{cin} (used for input).
+
+
+\begin{itemize}
+    \item \texttt{cout << "Hello, world!"} sends the string to the output stream (your screen).
+    \item \texttt{<<} is called the \textbf{insertion operator}; it inserts data into the output stream.
+    \item \texttt{endl} ends the current line and moves the cursor to the next line.
+\end{itemize}
+
+This is how C++ programs communicate with the user.
+
+The line \texttt{std::cout} means \texttt{cout} comes from the \texttt{std} library. Alteratively, you could insert \texttt{using namespace std;} after the \texttt{include}
+
+\end{document}
