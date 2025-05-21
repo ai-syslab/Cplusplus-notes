@@ -1,0 +1,180 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+
+\title{Stream Operations}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+C++ uses streams to perform input and output (I/O) operations. A stream is an abstraction that represents a device where data can be read from or written to, such as the console, a file, or a string.
+
+\section{Standard Input and Output}
+
+\texttt{cin} and \texttt{cout} are used for reading from standard input and writing to standard output respectively.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+int main() {
+    int age;
+    cout << "Enter your age: ";
+    cin >> age;
+    cout << "You are " << age << " years old." << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\section{String Streams}
+
+The \texttt{sstream} header provides stream classes that operate on strings: \texttt{istringstream}, \texttt{ostringstream}, and \texttt{stringstream}.
+
+\begin{itemize}
+  \item \texttt{istringstream} is used to extract data from strings.
+  \item \texttt{ostringstream} is used to write data to a string.
+  \item \texttt{stringstream} can do both.
+\end{itemize}
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string data = "42 3.14 hello";
+    istringstream iss(data);
+    int x;
+    double y;
+    string word;
+    iss >> x >> y >> word;
+    cout << x << ", " << y << ", " << word << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\section{File Streams}
+
+The \texttt{fstream} header provides \texttt{ifstream} for reading files and \texttt{ofstream} for writing files.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream outFile("output.txt");
+    outFile << "Hello, file!" << endl;
+    outFile.close();
+
+    ifstream inFile("output.txt");
+    string line;
+    getline(inFile, line);
+    cout << "Read from file: " << line << endl;
+    inFile.close();
+    return 0;
+}
+\end{lstlisting}
+
+\section{Notes}
+\begin{itemize}
+  \item Always check if file streams are successfully opened using \texttt{is\_open()} or by checking the stream object in a condition.
+  \item Use \texttt{getline()} for reading lines that may include spaces.
+  \item Use \texttt{eof()} or loop conditions like \texttt{while(inFile >> var)} to process streams until the end.
+\end{itemize}
+
+\section{A more detailed example}
+This example demonstrates writing structured data to a file and then reading it back line by line.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+int main() {
+    // Write to file
+    ofstream outFile("students.txt");
+    if (!outFile) {
+        cerr << "Failed to open file for writing." << endl;
+        return 1;
+    }
+
+    vector<string> students = {
+        "101 Alice 88.5",
+        "102 Bob 92.0",
+        "103 Carol 79.5"
+    };
+
+    for (const auto& line : students) {
+        outFile << line << endl;
+    }
+    outFile.close();
+
+    // Read from file
+    ifstream inFile("students.txt");
+    if (!inFile) {
+        cerr << "Failed to open file for reading." << endl;
+        return 1;
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        istringstream iss(line);
+        int id;
+        string name;
+        float score;
+        iss >> id >> name >> score;
+        cout << "ID: " << id << ", Name: " << name << ", Score: " << score << endl;
+    }
+    inFile.close();
+
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Explanation:} 
+\begin{itemize}
+  \item The first part writes a vector of student records to a file using \texttt{ofstream}.
+  \item The second part reads each line using \texttt{getline()}, then parses each line with \texttt{istringstream}.
+  \item The \texttt{auto} keyword in the range-based \texttt{for} loop lets the compiler deduce the type of each element in the vector. Here, each element is a \texttt{std::string}.
+  \item \texttt{cerr} is used to print error messages to the standard error stream. It is unbuffered, meaning output is sent directly to the terminal without being stored temporarily in a buffer. This ensures that error messages appear immediately.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+
+\title{Strings}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+C++ provides support for strings using two main approaches: C-style strings and the \texttt{std::string} class from the Standard Library. The \texttt{std::string} class is preferred for most applications due to its safety and flexibility.
+
+\section{C-style Strings}
+
+A C-style string is an array of characters terminated by the null character \texttt{\textbackslash0}. It is declared using a character array.
+
+\begin{lstlisting}[style=cppstyle]
+char greeting[] = "Hello";
+\end{lstlisting}
+
+\texttt{cstring} library functions like \texttt{strlen()}, \texttt{strcpy()}, and \texttt{strcmp()} are used to manipulate C-style strings.
+
+\section{std::string Class}
+
+The \texttt{std::string} class is part of the \texttt{<string>} header and provides a wide range of operations.
+
+\begin{itemize}
+  \item Safe and dynamic resizing.
+  \item Supports operators like \texttt{+} for concatenation and \texttt{==} for comparison.
+  \item Can use member functions like \texttt{length()}, \texttt{substr()}, \texttt{find()}, and \texttt{append()}.
+\end{itemize}
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name = "Alice";
+    string greeting = "Hello, " + name;
+    cout << greeting << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\section{Common Operations}
+
+\begin{lstlisting}[style=cppstyle]
+string s = "example";
+int len = s.length();        // Get length
+char c = s[0];               // Access character
+s += " string";              // Append
+s.substr(2, 3);              // "amp"
+s.find("amp");               // Returns 2
+\end{lstlisting}
+
+\end{document}
