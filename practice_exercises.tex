@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 
-\title{Practice Problems}
+\title{Coding Problems}
 \author{}
 \date{}
 
@@ -34,6 +34,186 @@
 \begin{document}
 
 \maketitle
+
+\section{FizzBuzz Problem}
+
+\textbf{Problem Statement:}
+
+Write a function in C++ that prints the numbers from 1 to \texttt{n}. But for multiples of three, print \texttt{"Fizz"} instead of the number, and for the multiples of five, print \texttt{"Buzz"}. For numbers which are multiples of both three and five, print \texttt{"FizzBuzz"}.
+
+\textbf{Function Signature:}
+
+\begin{lstlisting}[style=cppstyle]
+void fizzbuzz(int n);
+\end{lstlisting}
+
+\textbf{Example Test Case:}
+
+The following \texttt{main()} function runs a test with \texttt{n = 15} and should produce output matching the expected result described below.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+void fizzbuzz(int n) {
+    // TODO: Implement this function
+}
+
+int main() {
+    fizzbuzz(15);
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Expected Output:}
+\begin{verbatim}
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+\end{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Working with Vectors: Student Scores Analyzer}
+
+\textbf{Problem Statement:}
+
+Write a C++ program to read and analyze a list of student test scores. Your task is to implement a function named \texttt{analyzeScores()} that performs the following steps using a \texttt{std::vector<int>}:
+
+\begin{enumerate}
+  \item Read a list of integer scores from the user until \texttt{-1} is entered (which should not be included in the list).
+  \item Display the total number of scores entered.
+  \item Compute and print the average score (as a \texttt{double}, rounded automatically by standard output).
+  \item Remove all scores from the vector that are strictly less than the average.
+  \item Print the updated list of scores, one per line.
+\end{enumerate}
+
+\textbf{Function Signature:}
+
+\begin{lstlisting}[style=cppstyle]
+void analyzeScores();
+\end{lstlisting}
+
+\textbf{Test Case:}
+
+Use the following \texttt{main()} function to test your implementation.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+int main() {
+    analyzeScores();
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Example Input (typed by user):}
+\begin{verbatim}
+80
+90
+70
+60
+100
+-1
+\end{verbatim}
+
+\textbf{Expected Output:}
+\begin{verbatim}
+Total scores entered: 5
+Average score: 80
+Scores above or equal to average:
+80
+90
+100
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Class Design: BankAccount}
+
+\textbf{Problem Statement:}
+
+Design and implement a C++ class named \texttt{BankAccount} to model a simple bank account. The class should meet the following requirements:
+
+\begin{itemize}
+  \item The class must have two private data members:
+    \begin{itemize}
+      \item \texttt{name} (a \texttt{string}): the name of the account holder
+      \item \texttt{balance} (a \texttt{double}): the account balance
+    \end{itemize}
+  \item Provide a constructor that takes the account holder's name and an initial balance as parameters.
+  \item Provide getter methods for both the name and the balance.
+  \item Provide a setter method to update the name.
+  \item Provide two public methods:
+    \begin{itemize}
+      \item \texttt{deposit(double amount)}: adds the amount to the balance
+      \item \texttt{withdraw(double amount)}: subtracts the amount from the balance, but only if sufficient funds are available
+    \end{itemize}
+\end{itemize}
+
+\textbf{Function Signatures:}
+
+\begin{lstlisting}[style=cppstyle]
+class BankAccount {
+    // Implement this class
+};
+\end{lstlisting}
+
+\textbf{Test Case:}
+
+Use the following \texttt{main()} function to test your implementation.
+
+\begin{lstlisting}[style=cppstyle]
+#include <iostream>
+using namespace std;
+
+int main() {
+    BankAccount acc("Alice", 1000.0);
+    
+    cout << "Name: " << acc.getName() << endl;
+    cout << "Initial Balance: " << acc.getBalance() << endl;
+    
+    acc.deposit(500.0);
+    cout << "After deposit: " << acc.getBalance() << endl;
+    
+    acc.withdraw(200.0);
+    cout << "After withdrawal: " << acc.getBalance() << endl;
+
+    acc.withdraw(2000.0);  // Should not allow, balance unchanged
+    cout << "After failed withdrawal: " << acc.getBalance() << endl;
+    
+    acc.setName("Bob");
+    cout << "Updated Name: " << acc.getName() << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Expected Output:}
+
+\begin{verbatim}
+Name: Alice
+Initial Balance: 1000
+After deposit: 1500
+After withdrawal: 1300
+After failed withdrawal: 1300
+Updated Name: Bob
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Dynamic Memory and Rule of Three}
 Write the implementation and test for the following C++ class that models a Game Inventory system.
 \begin{lstlisting}[style=cppstyle]
@@ -77,7 +257,7 @@ Write the implementation and test for the following C++ class that models a Game
 	#endif // INVENTORY_H
 \end{lstlisting}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Merging Two Singly Linked Lists}
 
 You are given a basic implementation of a singly linked list storing \texttt{int} values. Your task is to write a member function \texttt{mergeWith} that merges the current list with another sorted linked list, resulting in a single sorted linked list. Both lists are sorted in non-decreasing order.
