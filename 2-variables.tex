@@ -107,6 +107,18 @@ Each variable must have a ``type" that specifies the type of data it holds. For 
 \end{tabular}
 \end{center}
 
+\subsection*{Constant Variables with \texttt{const}}
+
+Sometimes you may want to declare a variable whose value should not change after initialization. In such cases, use the \texttt{const} keyword. This makes the variable read-only.
+
+\begin{lstlisting}[style=cppstyle]
+const double pi = 3.14159;
+\end{lstlisting}
+
+Attempting to modify a \texttt{const} variable later in the program will result in a compilation error. This is useful for defining fixed values like mathematical constants, configuration settings, or immutable identifiers.
+
+\textbf{Note:} You must initialize a \texttt{const} variable at the time of declaration.
+
 \subsection*{Rules for Naming Variables}
 \begin{itemize}
     \item Must start with a letter or underscore (\texttt{\_})
