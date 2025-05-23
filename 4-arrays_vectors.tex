@@ -118,6 +118,53 @@ cout << numbers[0];          // outputs 10
 
 \texttt{<int>} means this vector will store elements of type \texttt{int}. You can replace \texttt{int} with other types like \texttt{double}, \texttt{char}, or \texttt{string}.
 
+
+\textbf{Accessing Elements Safely:}
+\begin{lstlisting}[style=cppstyle]
+cout << numbers.at(1); // safer than numbers[1], checks bounds
+\end{lstlisting}
+The method \texttt{at(index)} throws an exception if the index is out of bounds, unlike the \texttt{[]} operator.
+
+\textbf{Removing the Last Element:}
+\begin{lstlisting}[style=cppstyle]
+numbers.pop_back(); // removes the last element
+\end{lstlisting}
+This is useful when treating the vector like a stack (LIFO).
+
+\textbf{Understanding Iterators:}
+
+An iterator is like a pointer that allows you to traverse through elements in a container (like a vector). The begin() method returns an iterator pointing to the first element, and end() returns an iterator one past the last element.
+
+\begin{lstlisting}[style=cppstyle]
+for (vector::iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    cout << *it << " ";
+}
+\end{lstlisting}
+
+Here, \texttt{*it} accesses the value pointed to by the iterator.
+
+\textbf{Erasing Elements:}
+\begin{lstlisting}[style=cppstyle]
+numbers.erase(numbers.begin() + 1); // removes the second element
+\end{lstlisting}
+The \texttt{erase()} function removes an element or a range of elements. You provide it an iterator pointing to the element(s) to remove.
+
+\textbf{Inserting Elements:}
+\begin{lstlisting}[style=cppstyle]
+numbers.insert(numbers.begin() + 1, 15); // insert 15 at index 1
+\end{lstlisting}
+The \texttt{insert()} function adds an element at a specific position, again using an iterator.
+
+\textbf{Example - Full Workflow:}
+\begin{lstlisting}[style=cppstyle]
+vector numbers = {10, 20, 30};
+numbers.insert(numbers.begin() + 1, 15); // 10, 15, 20, 30
+numbers.erase(numbers.begin() + 2);      // 10, 15, 30
+numbers.pop_back();                      // 10, 15
+for (int n : numbers) {
+    cout << *it << " ";
+}
+\end{lstlisting}
 \textbf{Looping with Range-Based for (C++11):}
 \begin{lstlisting}[style=cppstyle]
 for (int n : numbers) {
