@@ -1,20 +1,46 @@
-\documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
+\documentclass{article}
 \usepackage{listings}
-\usepackage{courier}
-\lstset{
-  basicstyle=\footnotesize\ttfamily,
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\geometry{margin=1in}
+
+\title{Recursion}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
   breaklines=true,
-  frame=single,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
   language=C++
 }
 
 \begin{document}
 
-\section*{Recursion in C++}
+\maketitle
 
-\subsection*{1. Definition}
+\section{Definition}
 Recursion is a programming technique where a function calls itself to solve a smaller instance of the same problem.\\
 \textbf{Key components:}
 \begin{itemize}
@@ -22,10 +48,10 @@ Recursion is a programming technique where a function calls itself to solve a sm
   \item \textbf{Recursive case}: the part where the function calls itself with a simpler or smaller argument.
 \end{itemize}
 
-\subsection*{2. How It Works}
+\section{How It Works}
 Each recursive call is pushed onto the call stack. When a base case is reached, the stack unwinds, returning results back up the chain.
 
-\subsection*{3. Example 1: Factorial}
+\section{Example 1: Factorial}
 Compute \(n!\) defined by
 \[
 n! = 
@@ -34,7 +60,7 @@ n! =
 n \times (n-1)!, & n > 1.
 \end{cases}
 \]
-\begin{lstlisting}
+\begin{lstlisting}[style=cppstyle]
 // factorial.cpp
 #include <iostream>
 
@@ -50,7 +76,7 @@ int main() {
 }
 \end{lstlisting}
 
-\subsection*{4. Example 2: Fibonacci (Naïve)}
+\section{Example 2: Fibonacci (Naïve)}
 Compute the \(n\)th Fibonacci number:
 \[
 F(n) = 
@@ -60,7 +86,7 @@ F(n) =
 F(n-1) + F(n-2), & n > 1.
 \end{cases}
 \]
-\begin{lstlisting}
+\begin{lstlisting}[style=cppstyle]
 // fibonacci.cpp
 #include <iostream>
 
@@ -76,10 +102,86 @@ int main() {
 }
 \end{lstlisting}
 
-\subsection*{5. Notes and Pitfalls}
+\section{Notes and Pitfalls}
 \begin{itemize}
   \item \textbf{Infinite recursion}: missing or incorrect base case leads to stack overflow.
   \item \textbf{Performance}: naïve recursion (e.g., Fibonacci) may have exponential time complexity.
 \end{itemize}
+
+
+\section{More Examples of Recursion in C++}
+
+Examples of common problems that can be expressed both iteratively and recursively
+
+\subsection{Computing Integer Powers}
+
+\textbf{Iterative Version:}
+\begin{lstlisting}[style=cppstyle]
+int power_iter(int base, int exponent) {
+int result = 1;
+for (int i = 0; i < exponent; ++i) {
+result *= base;
+}
+return result;
+}
+\end{lstlisting}
+
+\textbf{Recursive Version:}
+\begin{lstlisting}[style=cppstyle]
+int power_rec(int base, int exponent) {
+if (exponent == 0) return 1;
+return base * power_rec(base, exponent - 1);
+}
+\end{lstlisting}
+
+
+
+\subsection{Sum of First \textit{n} Natural Numbers}
+
+\textbf{Iterative Version:}
+\begin{lstlisting}[style=cppstyle]
+int sum_iter(int n) {
+int sum = 0;
+for (int i = 1; i <= n; ++i) {
+sum += i;
+}
+return sum;
+}
+\end{lstlisting}
+
+\textbf{Recursive Version:}
+\begin{lstlisting}[style=cppstyle]
+int sum_rec(int n) {
+if (n == 0) return 0;
+return n + sum_rec(n - 1);
+}
+\end{lstlisting}
+
+
+
+\subsection{Reversing a String}
+
+\textbf{Iterative Version:}
+\begin{lstlisting}[style=cppstyle]
+string reverse_iter(const string& s) {
+string result = "";
+for (int i = s.size - 1; i >= 0; --i) {
+result += s[i];
+}
+return result;
+}
+\end{lstlisting}
+
+\textbf{Recursive Version:}
+\begin{lstlisting}[style=cppstyle]
+string reverse_rec(const string& s) {
+if (s.empty()) return "";
+return reverse_rec(s.substr(1)) + s[0];
+}
+\end{lstlisting}
+
+
+
+These examples show how recursive thinking can naturally model problems that involve self-similarity or can be broken into subproblems of the same type. Recursion often leads to simpler and more elegant code, though care must be taken to avoid excessive stack usage or inefficient repeated computations.
 
 \end{document}
