@@ -41,10 +41,10 @@ A class in C++ is a blueprint for creating objects. It encapsulates data and fun
 \section{Why Use Classes?}
 Classes help in organizing complex programs by bundling data and the operations on that data together. This promotes:
 \begin{itemize}
-  \item Modularity
-  \item Code reuse
-  \item Encapsulation
-  \item Abstraction
+    \item Modularity: Classes allow you to group related data and functions together, making code easier to manage and organize.
+	\item Code reuse: Once defined, a class can be reused across programs and extended through inheritance to avoid rewriting code.
+	\item Encapsulation: Classes enable you to hide internal details and protect object state by restricting direct access to data.
+	\item Abstraction: Classes let you define high-level interfaces while hiding complex implementation details from the user.
 \end{itemize}
 
 \section{Data and Methods}
@@ -131,7 +131,8 @@ Operator overloading allows you to redefine how operators work with user-defined
 \begin{lstlisting}[style=cppstyle]
 	#include <iostream>
 
-	class Fraction {
+class Fraction {
+    private:
 		int numerator;
 		int denominator;
 	
@@ -155,7 +156,7 @@ Operator overloading allows you to redefine how operators work with user-defined
 		void display() const {
 			std::cout << numerator << "/" << denominator << "\n";
 		}
-	};
+};
 	
 	// Demo
 	int main() {
