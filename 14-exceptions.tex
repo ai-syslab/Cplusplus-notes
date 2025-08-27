@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Exceptions}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cppstyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++
+}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Overview}
+\begin{itemize}
+    \item Exceptions are used to handle runtime errors in C++.
+    \item Control is transferred from the point of error to a handler.
+    \item Main keywords: \texttt{try}, \texttt{catch}, \texttt{throw}.
+\end{itemize}
+
+\section{Basic Syntax}
+\begin{lstlisting}[language=C++]
+try {
+    // Code that may throw an exception
+    if (x == 0) {
+        throw std::runtime_error("Division by zero");
+    }
+    result = y / x;
+} catch (const std::exception& e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+}
+\end{lstlisting}
+
+\section{Key Points}
+\begin{itemize}
+    \item \texttt{throw} raises an exception.
+    \item \texttt{catch} defines how to handle it.
+    \item Handlers can catch by type (e.g., \texttt{int}, \texttt{std::exception}).
+    \item Uncaught exceptions cause program termination.
+    \item Multiple \texttt{catch} blocks can be used for different types.
+\end{itemize}
+
+\section{Deallocation and Resource Management}
+\begin{itemize}
+    \item When an exception is thrown, C++ automatically destroys all local objects
+          created since entering the \texttt{try} block.
+    \item This process is called \textbf{stack unwinding}.
+    \item Destructors of objects are called, so resources (memory, files, etc.)
+          are released correctly.
+    \item If raw pointers are used, memory leaks may occur unless managed carefully.
+    \item Best practice: use RAII (Resource Acquisition Is Initialization) with
+          smart pointers or resource-managing classes.
+\end{itemize}
+
+\section{Example: Automatic Deallocation}
+\begin{lstlisting}[language=C++]
+struct File {
+    File(const char* name) { f = fopen(name, "r"); }
+    ~File() { if (f) fclose(f); }  // destructor cleans up
+    FILE* f;
+};
+
+try {
+    File file("data.txt");  // allocated here
+    throw std::runtime_error("Some error");
+} catch (const std::exception& e) {
+    std::cerr << "Caught: " << e.what() << std::endl;
+}
+// file is automatically closed by destructor
+\end{lstlisting}
+
+\section{Notes}
+\begin{itemize}
+    \item Prefer using standard exceptions from \texttt{<stdexcept>}.
+    \item Exception handling separates error-handling code from normal logic.
+    \item Use exceptions for exceptional cases, not regular control flow.
+    \item RAII ensures resources are always freed, even when exceptions occur.
+\end{itemize}
+
+
+\end{document}

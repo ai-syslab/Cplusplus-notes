@@ -215,7 +215,7 @@ Updated Name: Bob
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Dynamic Memory and Rule of Three}
-Write the implementation and test for the following C++ class that models a Game Inventory system.
+Write the implementation for the following C++ class that models a Game Inventory system.
 \begin{lstlisting}[style=cppstyle]
 	#ifndef INVENTORY_H
 	#define INVENTORY_H
@@ -255,6 +255,118 @@ Write the implementation and test for the following C++ class that models a Game
 	};
 	
 	#endif // INVENTORY_H
+
+// main.cpp
+// Test driver for Inventory/Item exercise.
+// Assumes printInventory() output format described above.
+
+// Expected output is at the bottom of this file in a block comment.
+
+#include <iostream>
+#include "Inventory.h"
+
+int main() {
+    // [1] Default construct: should be empty
+    Inventory inv;
+    std::cout << "[1] Newly created inventory\n";
+    inv.printInventory();  // Inventory: (empty)
+
+    // [2] Add three distinct items
+    inv.addItem("Apples", 10);
+    inv.addItem("Bananas", 5);
+    inv.addItem("Carrots", 12);
+
+    std::cout << "\n[2] After adding 3 items\n";
+    inv.printInventory();
+    // Inventory:
+    // - Apples (10)
+    // - Bananas (5)
+    // - Carrots (12)
+
+    // [3] Remove one existing item
+    inv.removeItem("Bananas");
+
+    std::cout << "\n[3] After removing Bananas\n";
+    inv.printInventory();
+    // Inventory:
+    // - Apples (10)
+    // - Carrots (12)
+
+    // [4] Test copy constructor (deep copy)
+    Inventory copy = inv;
+    std::cout << "\n[4] Copy-constructed inventory (should match [3])\n";
+    copy.printInventory();
+    // Inventory:
+    // - Apples (10)
+    // - Carrots (12)
+
+    // Mutate original; copy should remain unchanged if deep copy is correct
+    inv.removeItem("Apples");
+
+    std::cout << "\n[5] Original after removing Apples\n";
+    inv.printInventory();
+    // Inventory:
+    // - Carrots (12)
+
+    std::cout << "\n[6] Copy remains unchanged\n";
+    copy.printInventory();
+    // Inventory:
+    // - Apples (10)
+    // - Carrots (12)
+
+    // [5] Test copy assignment (deep copy)
+    Inventory assigned;
+    assigned = inv;  // copy assignment from current 'inv'
+
+    std::cout << "\n[7] Assigned-from-original inventory (should match [5])\n";
+    assigned.printInventory();
+    // Inventory:
+    // - Carrots (12)
+
+    // Final destructor checks happen on scope exit (inv, copy, assigned)
+
+    return 0;
+}
+
+/*
+===========================
+EXPECTED PROGRAM OUTPUT
+===========================
+
+[1] Newly created inventory
+Inventory: (empty)
+
+[2] After adding 3 items
+Inventory:
+- Apples (10)
+- Bananas (5)
+- Carrots (12)
+
+[3] After removing Bananas
+Inventory:
+- Apples (10)
+- Carrots (12)
+
+[4] Copy-constructed inventory (should match [3])
+Inventory:
+- Apples (10)
+- Carrots (12)
+
+[5] Original after removing Apples
+Inventory:
+- Carrots (12)
+
+[6] Copy remains unchanged
+Inventory:
+- Apples (10)
+- Carrots (12)
+
+[7] Assigned-from-original inventory (should match [5])
+Inventory:
+- Carrots (12)
+
+*/
+
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
